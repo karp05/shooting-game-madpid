@@ -24,6 +24,15 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     otherSprite.destroy(effects.disintegrate, 200)
     info.changeScoreBy(1)
 })
+function backupshooting () {
+    game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
+    while (info.score() >= 16) {
+        pause(1100)
+        backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Player)
+        backup1.setPosition(0, Math.randomRange(0, 110))
+        mySprite.setVelocity(100, Math.randomRange(2, 15))
+    }
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hits < 2) {
         projectile = sprites.createProjectileFromSprite(img`
@@ -780,7 +789,9 @@ f e f e 4 4 e b f 4 4 e e f . . . . . . . . . .
 let enemy_ghost: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
+let backup1: Sprite = null
 let gamelevel = 0
+let backups: Image[] = []
 let Hits = 0
 let mySprite: Sprite = null
 info.setScore(0)
@@ -937,6 +948,41 @@ mySprite.setPosition(20, 53)
 let score = 0
 Hits = 5
 mySprite.setPosition(16, 47)
+backups = [img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . a c b 3 b c a . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . b . . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . b 5 5 5 5 5 5 5 b . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . . b . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`]
 if (controller.A.isPressed()) {
     gamelevel += 1
     scene.setBackgroundImage(img`
@@ -1176,5 +1222,10 @@ forever(function () {
         100,
         true
         )
+    }
+})
+forever(function () {
+    if (info.score() >= 16) {
+        backupshooting()
     }
 })
