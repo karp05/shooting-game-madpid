@@ -1,7 +1,9 @@
 {
     "name": "Shooting game (MADPID)",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "animation": "*",
+        "darts": "*"
     },
     "description": "",
     "files": [
