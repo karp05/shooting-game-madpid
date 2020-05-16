@@ -20,6 +20,7 @@ namespace myTiles {
 `
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.baDing.play()
     sprite.destroy()
     otherSprite.destroy(effects.disintegrate, 200)
     info.changeScoreBy(1)
@@ -75,6 +76,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.pewPew.play()
     scene.cameraShake(4, 500)
     Hits += -1
     otherSprite.destroy(effects.fountain, 150)
