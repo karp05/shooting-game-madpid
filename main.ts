@@ -27,46 +27,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 })
 function backupshooting () {
     game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
-    while (info.score() > 5) {
-        pause(1100)
-        backups = [img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . a . . . . . . . 
-. . . . . . . a c a . . . . . . 
-. . . . . . a c b c a . . . . . 
-. . . . . a c b 3 b c a . . . . 
-. . . . . . a c b c a . . . . . 
-. . . . . . . a c a . . . . . . 
-. . . . . . . . a . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . b . . . . . . . . 
-. . . . . . . 5 . . . . . . . . 
-. . . . . . b 5 b . . . . . . . 
-. . . . . b 5 5 5 b . . . . . . 
-. . . b 5 5 5 5 5 5 5 b . . . . 
-. . . . . b 5 5 5 b . . . . . . 
-. . . . . . b 5 b . . . . . . . 
-. . . . . . . 5 . . . . . . . . 
-. . . . . . . b . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`]
+    while (info.score() >= 16) {
         backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Projectile)
         backup1.setPosition(0, Math.randomRange(0, 110))
         backup1.setVelocity(100, Math.randomRange(2, 15))
+        pause(1100)
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -826,8 +791,8 @@ f e f e 4 4 e b f 4 4 e e f . . . . . . . . . .
 let enemy_ghost: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
-let backup1: Sprite = null
 let backups: Image[] = []
+let backup1: Sprite = null
 let gamelevel = 0
 let Hits = 0
 let mySprite: Sprite = null
@@ -1224,6 +1189,41 @@ forever(function () {
         100,
         true
         )
+        backups = [img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . a c b 3 b c a . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . b . . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . b 5 5 5 5 5 5 5 b . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . . b . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`]
     }
 })
 forever(function () {
