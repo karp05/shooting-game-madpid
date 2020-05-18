@@ -1,3 +1,8 @@
+enum ActionKind {
+    Walking,
+    Idle,
+    Jumping
+}
 namespace myTiles {
     //% blockIdentity=images._tile
     export const tile0 = img`
@@ -19,21 +24,20 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
-function backupshooting () {
-    game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
-    while (true) {
-        backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Projectile)
-        backup1.setPosition(1, Math.randomRange(0, 110))
-        mySprite.setVelocity(50, 50)
-        pause(2000)
-    }
-}
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.baDing.play()
     sprite.destroy()
     otherSprite.destroy(effects.disintegrate, 200)
     info.changeScoreBy(1)
 })
+function backupshooting () {
+    while (info.score() >= 15) {
+        backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Projectile)
+        backup1.setPosition(1, Math.randomRange(0, 110))
+        backup1.setVelocity(100, 15)
+        pause(1200)
+    }
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hits < 2) {
         projectile = sprites.createProjectileFromSprite(img`
@@ -792,8 +796,8 @@ let enemy_ghost: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
 let backup1: Sprite = null
-let gamelevel: number = []
-let Hits: number = []
+let gamelevel = 0
+let Hits = 0
 let mySprite: Sprite = null
 let backups: Image[] = []
 backups = [img`
@@ -1113,7 +1117,7 @@ if (controller.A.isPressed()) {
 forever(function () {
     controller.moveSprite(mySprite)
     if (gamelevel == 1) {
-        pause(550)
+        pause(500)
         enemy_ghost = sprites.create(img`
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -1140,8 +1144,8 @@ forever(function () {
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
 `, SpriteKind.Enemy)
-        enemy_ghost.setPosition(152, Math.randomRange(0, 110))
-        enemy_ghost.setVelocity(-100, Math.randomRange(2, 15))
+        enemy_ghost.setPosition(152, Math.randomRange(0, 100))
+        enemy_ghost.setVelocity(-100, Math.randomRange(2, 40))
         mySprite.setFlag(SpriteFlag.AutoDestroy, true)
         animation.runImageAnimation(
         enemy_ghost,
@@ -1225,7 +1229,10 @@ forever(function () {
         true
         )
     }
+})
+forever(function () {
     if (info.score() >= 15) {
+        game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
         backupshooting()
     }
 })
