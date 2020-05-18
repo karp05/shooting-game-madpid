@@ -19,6 +19,15 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 `
 }
+function backupshooting () {
+    game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
+    while (true) {
+        backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Projectile)
+        backup1.setPosition(1, Math.randomRange(0, 110))
+        mySprite.setVelocity(50, 50)
+        pause(2000)
+    }
+}
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.baDing.play()
     sprite.destroy()
@@ -782,9 +791,46 @@ f e f e 4 4 e b f 4 4 e e f . . . . . . . . . .
 let enemy_ghost: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
+let backup1: Sprite = null
 let gamelevel: number = []
 let Hits: number = []
 let mySprite: Sprite = null
+let backups: Image[] = []
+backups = [img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . a c b 3 b c a . . . . 
+. . . . . . a c b c a . . . . . 
+. . . . . . . a c a . . . . . . 
+. . . . . . . . a . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . . 5 5 5 5 5 5 5 . . . . . 
+. . . . . b 5 5 5 b . . . . . . 
+. . . . . . b 5 b . . . . . . . 
+. . . . . . . 5 . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`]
 info.setScore(0)
 scene.setBackgroundImage(img`
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -1178,28 +1224,8 @@ forever(function () {
         100,
         true
         )
-        if (info.score() >= 5) {
-            game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
-            projectile2 = sprites.createProjectileFromSide(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . a . . . . . . . 
-. . . . . . . a c a . . . . . . 
-. . . . . . a c b c a . . . . . 
-. . . . . a c b 3 b c a . . . . 
-. . . . . . a c b c a . . . . . 
-. . . . . . . a c a . . . . . . 
-. . . . . . . . a . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, 50, 0)
-            projectile2.setPosition(1, Math.randomRange(0, 110))
-            pause(2000)
-        }
+    }
+    if (info.score() >= 15) {
+        backupshooting()
     }
 })
