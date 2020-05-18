@@ -25,15 +25,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     otherSprite.destroy(effects.disintegrate, 200)
     info.changeScoreBy(1)
 })
-function backupshooting () {
-    game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
-    while (info.score() >= 16) {
-        backup1 = sprites.create(backups[Math.randomRange(0, 1)], SpriteKind.Projectile)
-        backup1.setPosition(0, Math.randomRange(0, 110))
-        backup1.setVelocity(100, Math.randomRange(2, 15))
-        pause(1100)
-    }
-}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hits < 2) {
         projectile = sprites.createProjectileFromSprite(img`
@@ -791,10 +782,8 @@ f e f e 4 4 e b f 4 4 e e f . . . . . . . . . .
 let enemy_ghost: Sprite = null
 let projectile2: Sprite = null
 let projectile: Sprite = null
-let backups: Image[] = []
-let backup1: Sprite = null
-let gamelevel = 0
-let Hits = 0
+let gamelevel: number = []
+let Hits: number = []
 let mySprite: Sprite = null
 info.setScore(0)
 scene.setBackgroundImage(img`
@@ -1189,7 +1178,9 @@ forever(function () {
         100,
         true
         )
-        backups = [img`
+        if (info.score() >= 5) {
+            game.showLongText("Well done! Help has arrived and is behind you..keep shooting!", DialogLayout.Bottom)
+            projectile2 = sprites.createProjectileFromSide(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -1206,28 +1197,9 @@ forever(function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-`, img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . b . . . . . . . . 
-. . . . . . . 5 . . . . . . . . 
-. . . . . . b 5 b . . . . . . . 
-. . . . . b 5 5 5 b . . . . . . 
-. . . b 5 5 5 5 5 5 5 b . . . . 
-. . . . . b 5 5 5 b . . . . . . 
-. . . . . . b 5 b . . . . . . . 
-. . . . . . . 5 . . . . . . . . 
-. . . . . . . b . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`]
-    }
-})
-forever(function () {
-    if (info.score() >= 16) {
-        backupshooting()
+`, 50, 0)
+            projectile2.setPosition(1, Math.randomRange(0, 110))
+            pause(2000)
+        }
     }
 })
